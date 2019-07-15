@@ -1,0 +1,62 @@
+version: 2
+
+build-filters: &build-filters
+  tags:
+    ignore: /.*/
+  branches:
+    only: /.*/
+
+master-filters: &master-filters
+  tags:
+    ignore: /.*/
+  branches:
+    only: master
+
+
+commands:
+  build-and-push-hashed:
+    description: "Build the image and push the hashed version"
+    parameters:
+      image_name:
+        type: string
+    steps:
+      - run: make -C << parameters.image_name >> pull-latest
+      - run: make -C << parameters.image_name >> build
+      - run: make -C << parameters.image_name >> push-hashed
+
+jobs:
+  tag-with-latest:
+    working_directory: ~/pmdarima-docker
+    docker:
+      - image: circleci/python:3.6.5
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: make tag-with-latest
+
+  circle-pypy-base:
+    working_directory: ~/pmdarima-docker
+    docker:
+      - image: circleci/python:3.6.5
+    steps:
+      - setup_remote_docker
+      - checkout
+      - build-and-push-hashed:
+          image_name: "circle-pypy-base"
+
+workflows:
+  version: 2
+  pmdarima-image-pipeline:
+    jobs:
+      - circle-pypy-base:
+          filters: *build-filters
+
+      - all-images-built-successfully:
+          requires:
+            - circle-pypy-base
+          filters: *build-filters
+
+      - tag-with-latest:
+          requires:
+            - all-images-built-successfully
+          filters: *master-filters

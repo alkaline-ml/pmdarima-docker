@@ -9,8 +9,7 @@ CLEAN_CMDS := $(patsubst %, clean-%, $(MAKEDIRS))
 
 .PHONY: $(BUILD_CMDS)
 $(BUILD_CMDS):
-	$(info $(filter %/$(strip $(patsubst build-%, %, $@)), $(MAKEDIRS)) build)
-	@make -C $(filter %/$(strip $(patsubst build-%, %, $@)), $(MAKEDIRS)) build
+	@make -C $(strip $(patsubst build-%, %, $@)) build
 
 .PHONY: build
 build: $(BUILD_CMDS)

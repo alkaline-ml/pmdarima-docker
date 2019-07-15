@@ -12,26 +12,30 @@ HASHED = $(IMAGE):ci-$(GIT_HASH)
 TAGGED = $(IMAGE):$(GIT_TAG)
 
 
-.PHONY: logmsg
-logmsg:
-	$(info # ##############################)
+.PHONY: build
+build:
+	$(info # ############################################)
 	$(info #)
 	$(info # Now building $(IMAGE_NAME))
 	$(info #)
-	$(info # ##############################)
-
-
-.PHONY: build
-build: logmsg
+	$(info # ############################################)
 	docker build \
 		--cache-from $(LATEST) \
 		-t $(LOCAL) .
 	docker tag $(LOCAL) $(HASHED)
 
+.PHONY: clean
+clean:
+ifneq ($(IMAGES), )
+	docker rmi -f $(IMAGES) || true
+else
+	$(info No $(IMAGE) images to remove)
+endif
+
 .PHONY: push-hashed
 push-hashed:
 ifndef CIRCLECI
-	$(error Pushing is only intended to be used from within the Circle CI workflow)
+	$(error Pushing is only intended to be used on Circle CI)
 else
 	docker push $(HASHED)
 endif
