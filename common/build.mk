@@ -8,8 +8,7 @@ GIT_TAG = $(shell git describe --tags --exact-match $(GIT_HASH) 2>/dev/null)
 IMAGE = $(PREFIX)/$(IMAGE_NAME)
 LOCAL = $(IMAGE):local
 LATEST = $(IMAGE):latest
-HASHED = $(IMAGE):ci-$(GIT_HASH)
-TAGGED = $(IMAGE):$(GIT_TAG)
+HASHED = $(IMAGE):$(GIT_HASH)
 
 
 .PHONY: build
@@ -23,14 +22,6 @@ build:
 		--cache-from $(LATEST) \
 		-t $(LOCAL) .
 	docker tag $(LOCAL) $(HASHED)
-
-.PHONY: clean
-clean:
-ifneq ($(IMAGES), )
-	docker rmi -f $(IMAGES) || true
-else
-	$(info No $(IMAGE) images to remove)
-endif
 
 .PHONY: push-hashed
 push-hashed:
