@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-include ../common/credentials.mk
+include ./common/credentials.mk
 
 MAKEFILES := $(shell find . -name "Makefile" | grep -E "^./[^/]*/Makefile\$$")
 MAKEDIRS := $(patsubst ./%, %, $(patsubst %/Makefile, %, $(MAKEFILES)))
