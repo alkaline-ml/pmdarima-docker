@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 build-filters: &build-filters
   tags:
@@ -41,8 +41,15 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
+      - run: make docker-login
       - build-and-push-hashed:
           image_name: "circle-pypy-base"
+
+  all-images-built-successfully:
+    docker:
+      - image: bash:latest
+    steps:
+      - run: echo "All images built successfully"
 
 workflows:
   version: 2
