@@ -23,10 +23,6 @@ build:
 		-t $(LOCAL) .
 	docker tag $(LOCAL) $(HASHED)
 
-.PHONY: tag-latest
-tag-latest:
-	docker tag $(LOCAL) $(LATEST)
-
 .PHONY: push-hashed
 push-hashed:
 ifndef CIRCLECI
@@ -57,3 +53,7 @@ pull-latest:
 pull-base:
 	docker pull $(BASE)
 	docker tag $(BASE) $(BASE_LOCAL)
+
+.PHONY: tag-latest
+tag-latest:
+	docker tag $(LOCAL) $(LATEST)

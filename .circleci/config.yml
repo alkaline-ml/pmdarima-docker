@@ -24,17 +24,19 @@ commands:
       - run: make -C << parameters.image_name >> build
       - run: make -C << parameters.image_name >> push-hashed
 
-jobs:
-  tag-with-latest:
-    working_directory: ~/pmdarima-docker
-    docker:
-      - image: circleci/python:3.6.5
+  tag-and-push-latest:
+    description: "Tag the hashed version as latest and push it"
+    parameters:
+      image_name:
+        type: string
     steps:
-      - setup_remote_docker
-      - checkout
-      - run: make tag-latest
-      - run: make push-latest
+      - run: make -C << parameters.image_name >> pull-hashed
+      - run: make -C << parameters.image_name >> tag-latest
+      - run: make -C << parameters.image_name >> push-latest
 
+jobs:
+
+  ####################### Circle Pypy build and push ##########################
   circle-pypy-base:
     working_directory: ~/pmdarima-docker
     docker:
@@ -46,6 +48,18 @@ jobs:
       - build-and-push-hashed:
           image_name: "circle-pypy-base"
 
+  tag-circle-pypy-with-latest:
+    working_directory: ~/pmdarima-docker
+    docker:
+      - image: circleci/python:3.6.5
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: make docker-login
+      - tag-and-push-latest:
+          image_name: "circle-pypy-base"
+
+  ######################### Flag for all successful ##########################
   all-images-built-successfully:
     docker:
       - image: bash:latest
@@ -64,7 +78,7 @@ workflows:
             - circle-pypy-base
           filters: *build-filters
 
-      - tag-with-latest:
+      - tag-circle-pypy-with-latest:
           requires:
             - all-images-built-successfully
           filters: *master-filters
