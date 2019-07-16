@@ -6,6 +6,7 @@ MAKEFILES := $(shell find . -name "Makefile" | grep -E "^./[^/]*/Makefile\$$")
 MAKEDIRS := $(patsubst ./%, %, $(patsubst %/Makefile, %, $(MAKEFILES)))
 BUILD_CMDS := $(patsubst %, build-%, $(MAKEDIRS))
 TAG_LATEST_CMDS := $(patsubst %, tag-latest-%, $(MAKEDIRS))
+PUSH_LATEST_CMDS := $(patsubst %, push-latest-%, $(MAKEDIRS))
 
 .DEFAULT_GOAL := help
 
@@ -20,8 +21,15 @@ build: $(BUILD_CMDS)
 $(TAG_LATEST_CMDS):
 	@make -C $(strip $(patsubst tag-latest-%, %, $@)) tag-latest
 
-.PHONY: tag-with-latest
+.PHONY: tag-latest
 tag-latest: $(TAG_LATEST_CMDS)
+
+.PHONY: $(PUSH_LATEST_CMDS)
+$(PUSH_LATEST_CMDS):
+	@make -C $(strip $(patsubst push-latest-%, %, $@)) push-latest
+
+.PHONY: push-latest
+push-latest: $(PUSH_LATEST_CMDS)
 
 .PHONY: help
 help:
@@ -33,6 +41,6 @@ help:
 	@echo $(BUILD_CMDS) | tr [:space:] "\n"
 	@echo
 	@echo "Available tag commands:"
-	@echo "tag-with-latest"
+	@echo "tag-latest"
 	@echo $(TAG_LATEST_CMDS) | tr [:space:] "\n"
 	@echo

@@ -35,6 +35,14 @@ else
 	docker push $(HASHED)
 endif
 
+.PHONY: push-latest
+push-latest:
+ifndef CIRCLECI
+	$(error Pushing is only intended to be used on Circle CI)
+else
+	docker push $(LATEST)
+endif
+
 .PHONY: pull-hashed
 pull-hashed:
 	docker pull $(HASHED)
