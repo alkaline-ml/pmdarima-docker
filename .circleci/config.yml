@@ -32,7 +32,7 @@ jobs:
     steps:
       - setup_remote_docker
       - checkout
-      - run: make tag-with-latest
+      - run: make tag-latest
 
   circle-pypy-base:
     working_directory: ~/pmdarima-docker
