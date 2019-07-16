@@ -1,5 +1,8 @@
 FROM pypy:3.6-7.1.1
 
+# https://stackoverflow.com/a/25423366/3015734
+SHELL ["/bin/bash", "-c"]
+
 RUN apt-get -yq update && apt-get -yq install \
     libatlas-dev \
     libatlas-base-dev \
@@ -15,7 +18,7 @@ RUN virtualenv -p $(command -v pypy3) pypy-env
 # we have to run these in separate steps since the last thing pip does is
 # install at each step... first it collects. and subsequent packages require
 # installations (not just downloads) of previous packages in some cases.
-RUN /bin/bash -c "source pypy-env/bin/activate" && \
+RUN source pypy-env/bin/activate && \
     pip install --extra-index ${extra_index_url} numpy Cython pytest && \
     pip install --extra-index ${extra_index_url} scipy && \
     pip install --extra-index ${extra_index_url} scikit-learn && \
