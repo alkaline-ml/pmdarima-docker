@@ -23,21 +23,9 @@ build:
 		-t $(LOCAL) .
 	docker tag $(LOCAL) $(HASHED)
 
-.PHONY: push-hashed
-push-hashed:
-ifndef CIRCLECI
-	$(error Pushing is only intended to be used on Circle CI)
-else
-	docker push $(HASHED)
-endif
-
-.PHONY: push-latest
-push-latest:
-ifndef CIRCLECI
-	$(error Pushing is only intended to be used on Circle CI)
-else
-	docker push $(LATEST)
-endif
+.PHONY: clean
+clean:
+	rm VERSION || true
 
 .PHONY: pull-hashed
 pull-hashed:
@@ -57,3 +45,34 @@ pull-base:
 .PHONY: tag-latest
 tag-latest:
 	docker tag $(LOCAL) $(LATEST)
+
+.PHONY: check-pre-push
+check-pre-push:
+ifndef CIRCLECI
+	$(error Pushing is only intended to be used on Circle CI)
+endif
+
+.PHONY: push-hashed
+push-hashed: check-pre-push
+	docker push $(HASHED)
+
+.PHONY: push-latest
+push-latest: check-pre-push
+	docker push $(LATEST)
+
+.PHONY: push-versioned
+push-versioned: check-pre-push VERSION
+	docker push $(IMAGE):`cat VERSION`
+
+.PHONY: tag-version
+tag-version:
+	# This makes the assumption that VERSION exists in the image, which it will
+	# for all base distributions that are not Circle images
+	docker run \
+		--rm -it \
+		$(LOCAL) \
+		/bin/bash -c 'cat VERSION' > VERSION
+	docker tag $(HASHED) $(IMAGE):`cat VERSION`
+
+	# Leave version so we can use it to push
+	# rm VERSION

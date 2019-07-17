@@ -5,6 +5,7 @@ include ./common/credentials.mk
 MAKEFILES := $(shell find . -name "Makefile" | grep -E "^./[^/]*/Makefile\$$")
 MAKEDIRS := $(patsubst ./%, %, $(patsubst %/Makefile, %, $(MAKEFILES)))
 BUILD_CMDS := $(patsubst %, build-%, $(MAKEDIRS))
+CLEAN_CMDS := $(patsubst %, clean-%, $(MAKEDIRS))
 TAG_LATEST_CMDS := $(patsubst %, tag-latest-%, $(MAKEDIRS))
 PUSH_LATEST_CMDS := $(patsubst %, push-latest-%, $(MAKEDIRS))
 
@@ -14,19 +15,26 @@ PUSH_LATEST_CMDS := $(patsubst %, push-latest-%, $(MAKEDIRS))
 $(BUILD_CMDS):
 	@make -C $(strip $(patsubst build-%, %, $@)) build
 
-.PHONY: build
-build: $(BUILD_CMDS)
+.PHONY: $(CLEAN_CMDS)
+$(CLEAN_CMDS):
+	@make -C $(strip $(patsubst clean-%, %, $@)) build
+
+.PHONY: $(PUSH_LATEST_CMDS)
+$(PUSH_LATEST_CMDS):
+	@make -C $(strip $(patsubst push-latest-%, %, $@)) push-latest
 
 .PHONY: $(TAG_LATEST_CMDS)
 $(TAG_LATEST_CMDS):
 	@make -C $(strip $(patsubst tag-latest-%, %, $@)) tag-latest
 
+.PHONY: build
+build: $(BUILD_CMDS)
+
+.PHONY: clean
+clean: $(CLEAN_CMDS)
+
 .PHONY: tag-latest
 tag-latest: $(TAG_LATEST_CMDS)
-
-.PHONY: $(PUSH_LATEST_CMDS)
-$(PUSH_LATEST_CMDS):
-	@make -C $(strip $(patsubst push-latest-%, %, $@)) push-latest
 
 .PHONY: push-latest
 push-latest: $(PUSH_LATEST_CMDS)
