@@ -5,10 +5,13 @@ PREFIX = tgsmith61591
 GIT_HASH = $(shell git rev-parse --verify HEAD | cut -c 1-7)
 GIT_TAG = $(shell git describe --tags --exact-match $(GIT_HASH) 2>/dev/null)
 
+PMDARIMA_VSN := 1.2.1
+
 IMAGE = $(PREFIX)/$(IMAGE_NAME)
 LOCAL = $(IMAGE):local
 LATEST = $(IMAGE):latest
 HASHED = $(IMAGE):$(GIT_HASH)
+VERSIONED = $(IMAGE):$(PMDARIMA_VSN)
 
 
 .PHONY: build
@@ -20,6 +23,7 @@ build:
 	$(info # ############################################)
 	docker build \
 		--cache-from $(LATEST) \
+		--build-arg PMDARIMA_VSN=$(PMDARIMA_VSN) \
 		-t $(LOCAL) .
 	docker tag $(LOCAL) $(HASHED)
 
@@ -46,6 +50,10 @@ pull-base:
 tag-latest:
 	docker tag $(LOCAL) $(LATEST)
 
+.PHONY: tag-version
+tag-version:
+	docker tag $(HASHED) $(VERSIONED)
+
 .PHONY: check-pre-push
 check-pre-push:
 ifndef CIRCLECI
@@ -61,18 +69,5 @@ push-latest: check-pre-push
 	docker push $(LATEST)
 
 .PHONY: push-versioned
-push-versioned: check-pre-push VERSION
-	docker push $(IMAGE):`cat VERSION`
-
-.PHONY: tag-version
-tag-version:
-	# This makes the assumption that VERSION exists in the image, which it will
-	# for all base distributions that are not Circle images
-	docker run \
-		--rm -it \
-		$(LOCAL) \
-		/bin/bash -c 'cat VERSION' > VERSION
-	docker tag $(HASHED) $(IMAGE):`cat VERSION`
-
-	# Leave version so we can use it to push
-	# rm VERSION
+push-versioned: check-pre-push
+	docker push $(VERSIONED)

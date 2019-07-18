@@ -1,3 +1,6 @@
+# Not used in this build
+ARG PMDARIMA_VSN
+
 FROM pypy:3.6-7.1.1
 
 # https://stackoverflow.com/a/25423366/3015734
