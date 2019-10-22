@@ -20,4 +20,16 @@ with `docker pull`, e.g.:
 
 ```bash
 $ docker pull tgsmith61591/pmdarima-circle-pypy-base:latest
+$ docker pull tgsmith61591/pmdarima:latest
+```
+
+Running the containers will start an `ipython` session by default:
+
+```bash
+$ docker run --rm -it tgsmith61591/pmdarima:local
+Python 3.7.4 (default, Sep 12 2019, 15:40:15)
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.8.0 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: import pmdarima as pm
 ```
