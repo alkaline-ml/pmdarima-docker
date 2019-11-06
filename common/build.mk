@@ -5,7 +5,7 @@ PREFIX = tgsmith61591
 GIT_HASH = $(shell git rev-parse --verify HEAD | cut -c 1-7)
 GIT_TAG = $(shell git describe --tags --exact-match $(GIT_HASH) 2>/dev/null)
 
-PMDARIMA_VSN := 1.3.0
+PMDARIMA_VSN := 1.4.0
 
 IMAGE = $(PREFIX)/$(IMAGE_NAME)
 LOCAL = $(IMAGE):local
