@@ -10,8 +10,8 @@ The images built here are used for one of two purposes:
      help significantly reduce CI/CD build times (i.e., PyPy base, which is
      currently pinned to Python 3.6).
     
-  2. To serve as pre-built base images with `pmdarima` already installed.
-     Images that serve this purpose will be tagged with the version of
+  2. To serve as pre-built base images with the `pmdarima` package already
+     installed. Images that serve this purpose will be tagged with the version of
      `pmdarima` that they have installed.
        
 ### Pulling images
