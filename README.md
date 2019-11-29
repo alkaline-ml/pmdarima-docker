@@ -1,6 +1,6 @@
 # pmdarima docker
 
-[![CircleCI](https://circleci.com/gh/tgsmith61591/pmdarima-docker.svg?style=svg)](https://circleci.com/gh/tgsmith61591/pmdarima-docker)
+[![CircleCI](https://circleci.com/gh/alkaline-ml/pmdarima-docker.svg?style=svg)](https://circleci.com/gh/alkaline-ml/pmdarima-docker)
 
 The images built here are used for one of two purposes:
 
@@ -15,18 +15,18 @@ The images built here are used for one of two purposes:
        
 ### Pulling images
 
-All images are pushed to the `tgsmith61591` prefix. You can pull whatever image you like
+All images are pushed to the `alkalineml` prefix. You can pull whatever image you like
 with `docker pull`, e.g.:
 
 ```bash
-$ docker pull tgsmith61591/pmdarima-circle-pypy-base:latest
-$ docker pull tgsmith61591/pmdarima:latest
+$ docker pull alkalineml/pmdarima-circle-pypy-base:latest
+$ docker pull alkalineml/pmdarima:latest
 ```
 
 Running the containers will start an `ipython` session by default:
 
 ```bash
-$ docker run --rm -it tgsmith61591/pmdarima:local
+$ docker run --rm -it alkalineml/pmdarima:local
 Python 3.7.4 (default, Sep 12 2019, 15:40:15)
 Type 'copyright', 'credits' or 'license' for more information
 IPython 7.8.0 -- An enhanced Interactive Python. Type '?' for help.

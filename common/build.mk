@@ -1,6 +1,7 @@
 SHELL := /bin/bash
 
-PREFIX = tgsmith61591
+# Used to be tgsmith61591
+PREFIX = alkalineml
 
 GIT_HASH = $(shell git rev-parse --verify HEAD | cut -c 1-7)
 GIT_TAG = $(shell git describe --tags --exact-match $(GIT_HASH) 2>/dev/null)
