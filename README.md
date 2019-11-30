@@ -27,7 +27,7 @@ $ docker pull alkalineml/pmdarima:latest
 Running the containers will start an `ipython` session by default:
 
 ```bash
-$ docker run --rm -it alkalineml/pmdarima:local
+$ docker run --rm -it alkalineml/pmdarima:latest
 Python 3.7.4 (default, Sep 12 2019, 15:40:15)
 Type 'copyright', 'credits' or 'license' for more information
 IPython 7.8.0 -- An enhanced Interactive Python. Type '?' for help.
