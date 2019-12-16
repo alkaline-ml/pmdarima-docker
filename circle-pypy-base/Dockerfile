@@ -12,7 +12,7 @@ RUN apt-get -yq update && apt-get -yq install \
     liblapack-dev \
     gfortran
 
-ENV extra_index_url 'https://antocuni.github.io/pypy-wheels/ubuntu'
+ENV extra_index_url 'https://pypi.fury.io/alkaline-ml'
 
 # Make PyPy3 the default python rather than 2.7
 RUN ln -sf `which pypy3` /usr/bin/python
