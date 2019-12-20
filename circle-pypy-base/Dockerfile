@@ -21,7 +21,7 @@ RUN ln -sf `which pypy3` /usr/bin/python
 # install at each step... first it collects. and subsequent packages require
 # installations (not just downloads) of previous packages in some cases.
 RUN python -m pip install --extra-index ${extra_index_url} numpy Cython pytest
-RUN python -m pip install --extra-index ${extra_index_url} scipy
+RUN python -m pip install --extra-index ${extra_index_url} "scipy<1.4.0"
 RUN python -m pip install --extra-index ${extra_index_url} scikit-learn
 RUN python -m pip install --extra-index ${extra_index_url} "pandas==0.23.*" statsmodels matplotlib
 RUN python -m pip install --extra-index ${extra_index_url} pytest-mpl pytest-benchmark
