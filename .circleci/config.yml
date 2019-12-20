@@ -114,7 +114,7 @@ workflows:
     jobs:
       # Image builds ######################
       - circle-pypy-base:
-          filters: *never-filter
+          filters: *build-filters
 
       - cpython:
           filters: *build-filters
@@ -129,7 +129,7 @@ workflows:
       - tag-circle-pypy:
           requires:
             - all-images-built-successfully
-          filters: *never-filter
+          filters: *master-filters
 
       - tag-cpython:
           requires:
