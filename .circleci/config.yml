@@ -113,29 +113,23 @@ workflows:
   pmdarima-image-pipeline:
     jobs:
       # Image builds ######################
-      # TODO: eventually when pypy whls are built for scipy 1.3+, we need to
-      #   . probably reinstate this build.
-      # - circle-pypy-base:
-      #     filters: *never-filter
+      - circle-pypy-base:
+          filters: *build-filters
 
       - cpython:
           filters: *build-filters
 
       - all-images-built-successfully:
           requires:
-            # TODO: eventually when pypy whls are built for scipy 1.3+, we need to
-            #   . probably reinstate this requirement
-            # - circle-pypy-base
+            - circle-pypy-base
             - cpython
           filters: *build-filters
 
       # Image tags ########################
-      # TODO: eventually when pypy whls are built for scipy 1.3+, we need to
-      #   . probably reinstate this build.
-      # - tag-circle-pypy:
-      #     requires:
-      #       - all-images-built-successfully
-      #     filters: *never-filter
+      - tag-circle-pypy:
+          requires:
+            - all-images-built-successfully
+          filters: *master-filters
 
       - tag-cpython:
           requires:
