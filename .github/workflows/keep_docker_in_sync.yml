@@ -43,7 +43,7 @@ jobs:
       - name: Update version in Docker
         if: steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version
         run: |
-          sed -i .bak '9s/.*/PMDARIMA_VSN := ${{ steps.docker_version_check.outputs.pypi_version }}/' common/build.mk
+          sed -i .bak "9s/.*/PMDARIMA_VSN := ${{ steps.pypi_version_check.outputs.pypi_version }}/" common/build.mk
           rm -f common/build.mk.bak
 
       - name: Create Pull Request
