@@ -32,7 +32,7 @@ jobs:
           echo "Output: $output"
           echo "PyPI Version: ${output[2]}"
           echo "::set-output name=pypi_version::${output[2]}"
-        shell: zsh
+        shell: zsh {0}
 
       - name: Find Docker version
         id: docker_version_check  # Need this to refer to output below
@@ -41,14 +41,14 @@ jobs:
           echo "Output: $output"
           echo "Docker Version: ${output[3]}"
           echo "::set-output name=docker_version::${output[3]}"
-        shell: zsh
+        shell: zsh {0}
 
       - name: Update version in Docker
         if: steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version
         run: |
           sed -i .bak '9s/.*/PMDARIMA_VSN := ${{ steps.docker_version_check.outputs.pypi_version }}/' common/build.mk
           rm -f common/build.mk.bak
-        shell: zsh
+        shell: zsh {0}
 
       - name: Create Pull Request
         if: success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version
