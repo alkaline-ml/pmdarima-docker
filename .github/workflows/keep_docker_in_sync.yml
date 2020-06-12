@@ -29,7 +29,8 @@ jobs:
         run: |
           pip install yolk3k
           output=($(yolk -V pmdarima))
-          echo "PyPI Version: ${output[3]}"
+          echo "Output: $output"
+          echo "PyPI Version: ${output[2]}"
           echo "::set-output name=pypi_version::${output[2]}"
         shell: bash
 
@@ -37,6 +38,7 @@ jobs:
         id: docker_version_check  # Need this to refer to output below
         run: |
           output=($(cat common/build.mk | grep "PMDARIMA_VSN :="))
+          echo "Output: $output"
           echo "Docker Version: ${output[3]}"
           echo "::set-output name=docker_version::${output[3]}"
         shell: bash
@@ -54,7 +56,7 @@ jobs:
         with:
           token: ${{ secrets.TEST_TOKEN }}
           commit-message: Bump pmdarima version
-          title: 'Version {{ steps.pypi_version_check.outputs.pypi_version }}'
+          title: 'Version ${{ steps.pypi_version_check.outputs.pypi_version }}'
           body: |
             Bump docker version to ${{ steps.pypi_version_check.outputs.pypi_version }}
 
