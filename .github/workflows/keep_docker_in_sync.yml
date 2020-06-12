@@ -43,7 +43,7 @@ jobs:
         uses: peter-evans/create-pull-request@v2
         with:
           commit-message: Bump pmdarima version
-          title: '[TEST] Version ${{ steps.pypi_version_check.outputs.pypi_version }}'
+          title: 'Version ${{ steps.pypi_version_check.outputs.pypi_version }}'
           body: |
             Bump docker version to ${{ steps.pypi_version_check.outputs.pypi_version }}
 
