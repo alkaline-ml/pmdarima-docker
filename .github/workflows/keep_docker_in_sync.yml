@@ -29,14 +29,16 @@ jobs:
         run: |
           pip install yolk3k
           output=($(yolk -V pmdarima))
+          echo "PyPI Version: ${output[3]}"
           echo "::set-output name=pypi_version::${output[2]}"
         shell: bash
 
       - name: Find Docker version
         id: docker_version_check  # Need this to refer to output below
         run: |
-          docker_output=($(cat common/build.mk | grep "PMDARIMA_VSN :="))
-          echo "::set-output name=docker_version::${docker_output[3]}"
+          output=($(cat common/build.mk | grep "PMDARIMA_VSN :="))
+          echo "Docker Version: ${output[3]}"
+          echo "::set-output name=docker_version::${output[3]}"
         shell: bash
 
       - name: Update version in Docker
