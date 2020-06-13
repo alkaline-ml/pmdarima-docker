@@ -39,7 +39,7 @@ jobs:
         id: pr_check  # Need this to refer to output below
         run: |
           output=$(python .github/utils/bot_prs.py "${{ steps.pypi_version_check.outputs.pypi_version }}")
-          if [ $output == "True" ]; then
+          if [ "$output" == "True" ]; then
             echo "PR already exists for this version"
           fi
           echo "::set-output name=pr_exists::$output"
