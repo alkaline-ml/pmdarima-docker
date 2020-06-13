@@ -16,4 +16,4 @@ prs = json.loads(requests.get('https://api.github.com/repos/alkaline-ml/pmdarima
 
 bot_prs = [pr['title'] for pr in prs if pr['user']['login'] == 'github-actions[bot]']
 
-print(any(title == target_title for title in bot_prs))
+print(str(any(title == target_title for title in bot_prs)).lower())
