@@ -21,25 +21,34 @@ jobs:
           python-version: 3.8
           architecture: x64
 
+      - name: Installing requirements
+        run: pip install yolk3k requests
+
       - name: Find latest pmdarima version
         id: pypi_version_check  # Need this to refer to output below
         run: |
-          pip install yolk3k
           output=($(yolk -V pmdarima))
           echo "::set-output name=pypi_version::${output[1]}"
 
+      - name: Check if we already have this PR (open or closed)
+        id: pr_check  # Need this to refer to output below
+        run: |
+          output=$(python .github/utils/bot_prs.py "${{ steps.pypi_version_check.outputs.pypi_version }}")
+          echo "::set-output name=pr_exists::$output"
+
       - name: Find Docker version
         id: docker_version_check  # Need this to refer to output below
+        if: steps.pr_check.outpus.pr_exists == "False"
         run: |
           output=($(cat common/build.mk | grep "PMDARIMA_VSN :="))
           echo "::set-output name=docker_version::${output[2]}"
 
       - name: Update version in Docker
-        if: steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version
+        if: steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && steps.pr_check.outpus.pr_exists == "False"
         run: sed -i "9s/.*/PMDARIMA_VSN := ${{ steps.pypi_version_check.outputs.pypi_version }}/" common/build.mk
 
       - name: Create Pull Request
-        if: success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version
+        if: success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && steps.pr_check.outpus.pr_exists == "False"
         uses: peter-evans/create-pull-request@v2
         with:
           commit-message: Bump pmdarima version
@@ -55,5 +64,5 @@ jobs:
           branch-suffix: random
 
       - name: Check outputs
-        if: success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version
+        if: success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && steps.pr_check.outpus.pr_exists == "False"
         run: echo "Pull Request Number - ${{ env.PULL_REQUEST_NUMBER }}"
