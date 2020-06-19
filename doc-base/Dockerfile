@@ -14,7 +14,7 @@ RUN python -m pip install "pandas>=0.19"
 RUN python -m pip install "statsmodels>=0.11"
 RUN python -m pip install "sphinx==1.7.2"
 RUN python -m pip install "sphinx_gallery==0.1.13"
-RUN pythin -m pip install sphinx_rtd_theme
+RUN python -m pip install sphinx_rtd_theme
 RUN python -m pip install "matplotlib==2.2.0rc1"
 RUN python -m pip install "numpydoc==0.7.0"
 RUN python -m pip install "Django==1.11"
