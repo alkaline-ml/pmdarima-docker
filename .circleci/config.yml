@@ -101,6 +101,32 @@ jobs:
       - tag-and-push-latest:
           image_name: "cpython"
 
+  ########################### Documentation base image ##############################
+  docs:
+    working_directory: ~/pmdarima-docker
+    docker:
+      - image: circleci/python:3.6.5
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: make docker-login
+      - build-and-push-hashed:
+          image_name: "doc-base"
+
+  tag-docs:
+    working_directory: ~/pmdarima-docker
+    docker:
+      - image: circleci/python:3.6.5
+    steps:
+      - setup_remote_docker
+      - checkout
+      - run: make docker-login
+      # This is one we want to version
+      - tag-and-push-versioned:
+          image_name: "doc-base"
+      - tag-and-push-latest:
+          image_name: "doc-base"
+
   ######################### Flag for all successful ##########################
   all-images-built-successfully:
     docker:
@@ -119,10 +145,14 @@ workflows:
       - cpython:
           filters: *build-filters
 
+      - doc-base:
+          filters: *build-filters
+
       - all-images-built-successfully:
           requires:
             - circle-pypy-base
             - cpython
+            - doc-base
           filters: *build-filters
 
       # Image tags ########################
@@ -132,6 +162,11 @@ workflows:
           filters: *master-filters
 
       - tag-cpython:
+          requires:
+            - all-images-built-successfully
+          filters: *master-filters
+
+      - tag-doc-base:
           requires:
             - all-images-built-successfully
           filters: *master-filters
