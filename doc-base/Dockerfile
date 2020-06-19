@@ -1,7 +1,7 @@
 # Not used in this build
 ARG PMDARIMA_VSN
 
-FROM ubuntu:latest
+FROM python:3.7
 
 # https://stackoverflow.com/a/25423366/3015734
 SHELL ["/bin/bash", "-c"]
