@@ -6,7 +6,7 @@ PREFIX = alkalineml
 GIT_HASH = $(shell git rev-parse --verify HEAD | cut -c 1-7)
 GIT_TAG = $(shell git describe --tags --exact-match $(GIT_HASH) 2>/dev/null)
 
-PMDARIMA_VSN := 1.6.1
+PMDARIMA_VSN := 1.7.0
 
 IMAGE = $(PREFIX)/$(IMAGE_NAME)
 LOCAL = $(IMAGE):local
