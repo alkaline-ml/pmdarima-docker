@@ -11,7 +11,7 @@ RUN python -m pip install "numpy>=1.16"
 RUN python -m pip install "scipy>=1.3"
 RUN python -m pip install "scikit-learn>=0.19"
 RUN python -m pip install "pandas>=0.19"
-RUN python -m pip install "statsmodels>=0.11,0.12"
+RUN python -m pip install "statsmodels>=0.11,<0.12"
 RUN python -m pip install "sphinx==1.7.2"
 RUN python -m pip install "sphinx_gallery==0.1.13"
 RUN python -m pip install sphinx_rtd_theme
