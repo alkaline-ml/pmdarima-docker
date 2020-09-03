@@ -7,8 +7,7 @@ The images built here are used for one of two purposes:
   1. As base images for testing and doc generation for the
      [`pmdarima`](http://github.com/tgsmith61591/pmdarima) project. Note that
      for this purpose, the only images that should be included are those that
-     help significantly reduce CI/CD build times (i.e., PyPy base, which is
-     currently pinned to Python 3.6).
+     help significantly reduce CI/CD build times.
     
   2. To serve as pre-built base images with the `pmdarima` package already
      installed. Images that serve this purpose will be tagged with the version of
@@ -20,7 +19,7 @@ All images are pushed to the `alkalineml` prefix. You can pull whatever image yo
 with `docker pull`, e.g.:
 
 ```bash
-$ docker pull alkalineml/pmdarima-circle-pypy-base:latest
+$ docker pull alkalineml/pmdarima-doc-base:latest
 $ docker pull alkalineml/pmdarima:latest
 ```
 
