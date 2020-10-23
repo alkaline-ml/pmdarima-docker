@@ -52,11 +52,11 @@ jobs:
           echo "::set-output name=docker_version::${output[2]}"
 
       - name: Update version in Docker
-        if: ${{ steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && !steps.pr_check.outputs.pr_exists }}
+        if: ${{ steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && steps.pr_check.outputs.pr_exists != 'true' }}
         run: sed -i "9s/.*/PMDARIMA_VSN := ${{ steps.pypi_version_check.outputs.pypi_version }}/" common/build.mk
 
       - name: Create Pull Request
-        if: ${{ success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && !steps.pr_check.outputs.pr_exists }}
+        if: ${{ success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && steps.pr_check.outputs.pr_exists != 'true' }}
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Bump pmdarima version
