@@ -45,7 +45,7 @@ jobs:
           echo "::set-output name=pr_exists::$output"
 
       - name: Find Docker version
-        if: steps.pr_check.outputs.pr_exists != "true"
+        if: ${{ steps.pr_check.outputs.pr_exists != "true" }}
         id: docker_version_check  # Need this to refer to output below
         run: |
           output=($(cat common/build.mk | grep "PMDARIMA_VSN :="))
