@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: '0 7 * * *'  # Every day at 07:00 UTC (1AM CST or 2AM CDT)
 
+  # Run if we edit this file
+  push:
+    paths:
+      - '.github/workflows/keep_docker_in_sync.yml'
+
 jobs:
   keep-docker-in-sync:
     name: Check for Latest Version
@@ -16,7 +21,7 @@ jobs:
         uses: actions/checkout@master
 
       - name: Setting up Python
-        uses: actions/setup-python@v1.1.1
+        uses: actions/setup-python@v2
         with:
           python-version: 3.8
           architecture: x64
@@ -52,7 +57,7 @@ jobs:
 
       - name: Create Pull Request
         if: ${{ success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && !steps.pr_check.outputs.pr_exists }}
-        uses: peter-evans/create-pull-request@v2
+        uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Bump pmdarima version
           title: 'Version ${{ steps.pypi_version_check.outputs.pypi_version }}'
