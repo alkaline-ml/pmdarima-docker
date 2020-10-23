@@ -72,5 +72,5 @@ jobs:
           branch-suffix: random
 
       - name: Check outputs
-        if: ${{ success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && !steps.pr_check.outputs.pr_exists }}
+        if: ${{ success() && steps.pypi_version_check.outputs.pypi_version != steps.docker_version_check.outputs.docker_version && steps.pr_check.outputs.pr_exists != 'true' }}
         run: echo "Pull Request Number - ${{ env.PULL_REQUEST_NUMBER }}"
