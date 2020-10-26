@@ -52,29 +52,6 @@ commands:
 
 jobs:
 
-  ####################### Circle Pypy build and push ##########################
-  circle-pypy-base:
-    working_directory: ~/pmdarima-docker
-    docker:
-      - image: circleci/python:3.6.5
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run: make docker-login
-      - build-and-push-hashed:
-          image_name: "circle-pypy-base"
-
-  tag-circle-pypy:
-    working_directory: ~/pmdarima-docker
-    docker:
-      - image: circleci/python:3.6.5
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run: make docker-login
-      - tag-and-push-latest:
-          image_name: "circle-pypy-base"
-
   ########################### cPython base image ##############################
   cpython:
     working_directory: ~/pmdarima-docker
@@ -139,9 +116,6 @@ workflows:
   pmdarima-image-pipeline:
     jobs:
       # Image builds ######################
-      - circle-pypy-base:
-          filters: *build-filters
-
       - cpython:
           filters: *build-filters
 
@@ -150,17 +124,11 @@ workflows:
 
       - all-images-built-successfully:
           requires:
-            - circle-pypy-base
             - cpython
             - doc-base
           filters: *build-filters
 
       # Image tags ########################
-      - tag-circle-pypy:
-          requires:
-            - all-images-built-successfully
-          filters: *master-filters
-
       - tag-cpython:
           requires:
             - all-images-built-successfully
