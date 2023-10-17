@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.8
 ARG PMDARIMA_VSN
 
 RUN pip install pmdarima==${PMDARIMA_VSN}
