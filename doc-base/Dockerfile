@@ -14,7 +14,7 @@ RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "statsmodels>=0.11,!=0.12.0"
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "sphinx==1.7.2"
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org pytest-runner
-RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "sphinx_gallery==0.1.13"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "sphinx_gallery==0.18.0"
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org sphinx_rtd_theme
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org --default-timeout=100 "matplotlib==2.2.0"
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "numpydoc==0.7.0"
