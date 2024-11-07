@@ -1,23 +1,24 @@
 # Not used in this build
 ARG PMDARIMA_VSN
 
-FROM python:3.7
+FROM python:3.9
 
 # https://stackoverflow.com/a/25423366/3015734
 SHELL ["/bin/bash", "-c"]
 
-RUN python -m pip install "Cython>=0.29,<0.29.18"
-RUN python -m pip install "numpy>=1.16"
-RUN python -m pip install "scipy>=1.3"
-RUN python -m pip install "scikit-learn>=0.19"
-RUN python -m pip install "pandas>=0.19"
-RUN python -m pip install "statsmodels>=0.11,<0.12"
-RUN python -m pip install "sphinx==1.7.2"
-RUN python -m pip install "sphinx_gallery==0.1.13"
-RUN python -m pip install sphinx_rtd_theme
-RUN python -m pip install "matplotlib==2.2.0rc1"
-RUN python -m pip install "numpydoc==0.7.0"
-RUN python -m pip install "Django==1.11"
-RUN python -m pip install "image==1.5.19"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "Cython>=0.29,<0.29.18"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "numpy>=1.16,<2.0.0"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "scipy>=1.3"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "scikit-learn>=0.19"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "pandas>=0.19"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "statsmodels>=0.11,!=0.12.0"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "sphinx==1.7.2"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org pytest-runner
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "sphinx_gallery==0.1.13"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org sphinx_rtd_theme
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org --default-timeout=100 "matplotlib==2.2.0"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "numpydoc==0.7.0"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "Django==1.11"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "image==1.5.19"
 
 CMD ["bash"]

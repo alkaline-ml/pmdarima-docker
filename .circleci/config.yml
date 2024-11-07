@@ -56,7 +56,7 @@ jobs:
   cpython:
     working_directory: ~/pmdarima-docker
     docker:
-      - image: circleci/python:3.6.5
+      - image: circleci/python:3.10.1
     steps:
       - setup_remote_docker
       - checkout
@@ -67,7 +67,7 @@ jobs:
   tag-cpython:
     working_directory: ~/pmdarima-docker
     docker:
-      - image: circleci/python:3.6.5
+      - image: circleci/python:3.10.1
     steps:
       - setup_remote_docker
       - checkout
@@ -82,7 +82,7 @@ jobs:
   doc-base:
     working_directory: ~/pmdarima-docker
     docker:
-      - image: circleci/python:3.6.5
+      - image: circleci/python:3.10.1
     steps:
       - setup_remote_docker
       - checkout
@@ -93,7 +93,7 @@ jobs:
   tag-doc-base:
     working_directory: ~/pmdarima-docker
     docker:
-      - image: circleci/python:3.6.5
+      - image: circleci/python:3.10.1
     steps:
       - setup_remote_docker
       - checkout
