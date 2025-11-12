@@ -6,7 +6,7 @@ FROM python:3.11
 # https://stackoverflow.com/a/25423366/3015734
 SHELL ["/bin/bash", "-c"]
 
-RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "Cython>=0.29,<0.29.18"
+RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "Cython>=3.1.0"
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "numpy>=1.16,<2.0.0"
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "scipy>=1.3"
 RUN python -m pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host=files.pythonhosted.org "scikit-learn>=0.19"
